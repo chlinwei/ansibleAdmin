@@ -2,14 +2,10 @@ from sqlalchemy import create_engine, Column, Integer, String
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,session
-import os
+from app import ansibleAdmin
 
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) 
-SQLALCHEMY_DATABASE_URL = "sqlite:///sql_app.db"
-
-
-
+SQLALCHEMY_DATABASE_URL = ansibleAdmin.config["DB_URL"]
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -22,7 +18,6 @@ Base = declarative_base()
 
 def create_db_and_tables():
     Base.metadata.create_all(engine)
-    print(ROOT_DIR)
 
 
 def get_session():
