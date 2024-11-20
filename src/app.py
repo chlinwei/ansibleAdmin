@@ -1,6 +1,3 @@
-from config import config
+from src.config import config
 class ansibleAdmin:
     config = config
-
-
-
