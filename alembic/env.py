@@ -3,14 +3,14 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
-from src.app import ansibleAdmin
+from src.config import settings
 from src.database import Base
 from src.auth.models import UserModel
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option("sqlalchemy.url",ansibleAdmin.config['DB_URL'])
+config.set_main_option("sqlalchemy.url",settings.DB_URL)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

@@ -1,10 +1,7 @@
-from src.utils import *
-from src.exceptions import BaseException
-class UserException(BaseException,Exception):
-    def __init__(self,code: int, message: str):
-        self.code = code
-        self.message = message
-    
-    UserNotExists = (1000,"用户不存在")
-    UserExists = (1001,"用户已存在")
+from src.errorMapping import ErrorMapping
+class UserErrorMapping(ErrorMapping):
+    UserNotExists = (2000,'用户不存在')
+    UserExists = (2001,'用户已存在')
+
+
 

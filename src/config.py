@@ -1,8 +1,21 @@
 import os 
-from dotenv import load_dotenv
-load_dotenv()
-ABS_DATA_DIR=os.path.abspath(os.getenv("DATA_DIR"))
-config = {
-    "PORT": os.getenv("PORT"),
-    "DB_URL": f"sqlite:///{ABS_DATA_DIR}/sql_app.db"
-}
+from pydantic_settings import BaseSettings
+from pydantic import computed_field
+
+
+class Settings(BaseSettings):
+    API_V1_STR: str = "/api/v1"
+    # 60 minutes * 24 hours * 8 days = 8 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    # FRONTEND_HOST: str = "http://localhost:5173"
+
+    PROJECT_NAME: str = "ansibleAdmin"
+    DATA_DIR:str = "."
+    @property
+    def DB_URL(self) -> str:
+        return f"sqlite:///{self.DATA_DIR}/sql_app.db"
+    PORT:int = 8080
+  
+
+
+settings = Settings()  # type: ignore

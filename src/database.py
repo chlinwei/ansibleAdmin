@@ -1,31 +1,29 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker,session
-from src.app import ansibleAdmin
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import sessionmaker
+from src.config import settings
 
 
-SQLALCHEMY_DATABASE_URL = ansibleAdmin.config["DB_URL"]
+SQLALCHEMY_DATABASE_URL = settings.DB_URL
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Session = SessionLocal()
+# Session = SessionLocal()
 Base = declarative_base()
 
 
 # def create_db_and_tables():
 #     Base.metadata.create_all(engine)
 
-def get_session():
-    try:
-        yield Session
-    finally:
-        Session.close()
-    
-    
+# def get_session():
+#     try:
+#         yield Session
+#     finally:
+#         Session.close()
 
 
-    
+

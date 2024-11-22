@@ -1,26 +1,30 @@
 from fastapi import status
-from fastapi.responses import JSONResponse,Response
-from typing import Union
-from src.exceptions import BaseException
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+from fastapi.encoders import jsonable_encoder
+from typing import Generic,TypeVar,Optional
 
-def resp_200(*,data: Union[list,dict,str]) -> Response:
+T = TypeVar('T')
+class ResponseModel(BaseModel,Generic[T]):
+    code: int
+    message: str
+    data: Optional[T]
+
+def resp_200(*,data: Optional[T]) -> JSONResponse:
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content={
-            'code': 200,
-            'message': "Success",
-            'data': data,
-        }
+        content=jsonable_encoder(ResponseModel(code=200,message="success",data=data))
     )
 
 
-def resp_400_exception(*,data: Union[list,dict,str] = None, baseException: BaseException) -> Response:
-    return JSONResponse(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        content={
-            'code': baseException.code,
-            'message': baseException.message,
-            'data': data,
-        }
-    )
+# def resp_400_exception(*,data: Optional[T], baseException: BaseExceptionCode) -> JSONResponse:
+#     return JSONResponse(
+#         status_code=status.HTTP_400_BAD_REQUEST,
+#         content=jsonable_encoder(ResponseModel(code=baseException.code,message=baseException.message,data=data))
+#     )
+
+
+
+
+
 
