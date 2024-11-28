@@ -1,16 +1,27 @@
 from fastapi import FastAPI
-from src.config import settings
 from src.auth.router import userRouter
 from fastapi.staticfiles import StaticFiles
+from src.exceptions import AnsibleException,AnsibleAdminExceptionHandler
 from fastapi.openapi.docs import (
     get_redoc_html,
     get_swagger_ui_html,
     get_swagger_ui_oauth2_redirect_html,
 )
-
+import sys
+from loguru import logger
+from src.config import settings
 import uvicorn
 
 app = FastAPI(docs_url=None, redoc_url=None)
+
+#日志配置
+logger.add(settings.loggerSetting.LOG_DIR)
+logger.add(sys.stderr, format="{time} {level} {message}",  level=settings.loggerSetting.LOG_LEVEL)
+
+#全局异常
+app.add_exception_handler(AnsibleException,AnsibleAdminExceptionHandler)
+
+#静态资源
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 

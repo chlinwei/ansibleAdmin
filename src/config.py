@@ -1,7 +1,9 @@
 import os 
 from pydantic_settings import BaseSettings
-from pydantic import computed_field
-
+from pydantic import BaseModel
+class LoggerSetting(BaseModel):
+    LOG_DIR:str = "./logs"
+    LOG_LEVEL:str = "DEBUG"
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
@@ -11,11 +13,12 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str = "ansibleAdmin"
     DATA_DIR:str = "."
+    loggerSetting:LoggerSetting  = LoggerSetting()
     @property
     def DB_URL(self) -> str:
         return f"sqlite:///{self.DATA_DIR}/sql_app.db"
     PORT:int = 8080
-  
+
 
 
 settings = Settings()  # type: ignore

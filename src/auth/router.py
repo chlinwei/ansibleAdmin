@@ -22,3 +22,5 @@ def getUserById(user_id:int,userService: UserServiceDep):
 def getUserByName(name:str,userService: UserServiceDep):
     user = userService.getUserByName(name)
     return resp_200(data=user)
+
+
