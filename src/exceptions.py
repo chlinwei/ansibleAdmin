@@ -10,5 +10,6 @@ class AnsibleException(Exception):
 
 
 def AnsibleAdminExceptionHandler(request: Request, exception: AnsibleException):
+    print(f"============{exception.errordata}================")
     return resp_400_exception(errMapping=exception.errorMapping,data=exception.errordata)
     

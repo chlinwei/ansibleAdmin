@@ -11,8 +11,11 @@ import sys
 from loguru import logger
 from src.config import settings
 import uvicorn
+from fastapi_pagination import add_pagination
 
 app = FastAPI(docs_url=None, redoc_url=None)
+#分页
+add_pagination(app)
 
 #日志配置
 logger.add(settings.loggerSetting.LOG_DIR)
