@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from src.auth.router import userRouter
+from src.auth.router.menuRouter import menuRouter
+from src.auth.router.userRouter import userRouter
 from fastapi.staticfiles import StaticFiles
 from src.exceptions import AnsibleException,AnsibleAdminExceptionHandler
 from fastapi.openapi.docs import (
@@ -53,6 +54,7 @@ async def redoc_html():
     )
 
 app.include_router(router=userRouter)
+app.include_router(router=menuRouter)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=2223)

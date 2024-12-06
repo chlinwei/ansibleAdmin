@@ -31,15 +31,3 @@ class UserDao:
         stmt = (select(UserModel))
         with Session() as session:
             return paginate(session,stmt)
-            
-        
-        
-        
-
-        
-        
-            
-    
-        
-    
-            
